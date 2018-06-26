@@ -1,0 +1,14 @@
+---
+# handlers file for fail2ban
+
+- name: Restart fail2ban
+  become: yes
+  service:
+    name=fail2ban
+    state=restarted
+
+- name: Reload fail2ban
+  become: yes
+  service:
+    name=fail2ban
+    state=reloaded

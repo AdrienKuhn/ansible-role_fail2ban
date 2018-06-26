@@ -1,0 +1,36 @@
+---
+# tasks file for fail2ban
+
+- name: Ensure fail2ban package is installed
+  become: yes
+  apt:
+    pkg=fail2ban
+    state=latest
+  tags: fail2ban
+
+- name: Ensure fail2ban has required filter files
+  become: yes
+  copy:
+    src=fail2ban/filter.d/
+    dest=/etc/fail2ban/filter.d/
+    owner=root
+    group=root
+    mode=0644
+  notify: Restart fail2ban
+  tags: fail2ban
+
+- name: Ensure fail2ban is configured
+  become: yes
+  template:
+    src=fail2ban/fail2ban.local.j2
+    dest=/etc/fail2ban/fail2ban.local
+  tags: fail2ban
+  notify: Restart fail2ban
+
+- name: Ensure fail2ban jail is configured
+  become: yes
+  template:
+    src=fail2ban/jail.local.j2
+    dest=/etc/fail2ban/jail.local
+  tags: fail2ban
+  notify: Restart fail2ban

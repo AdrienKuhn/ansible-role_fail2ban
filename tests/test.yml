@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+    fail2ban:
+      jail:
+        recidive: true
+        ssh: true
+        sshDdos: true
+  roles:
+    - ansible-role_fail2ban
